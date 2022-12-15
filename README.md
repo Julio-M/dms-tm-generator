@@ -4,7 +4,7 @@ This is a python script that reads a file that inlcudes a list of `tables`, and 
 
 ## Before you run
 
-Before you run the script, make sure you have a `.txt` in the root directory, that lists of all the `tables` you want to include in the `table-mapping` file.
+Before you run the script, make sure you have a `.txt` in the root directory, that lists all the `tables` you want to include in the `table-mapping` file.
 
 example `table-example.txt`
 ```
