@@ -29,7 +29,8 @@ def readTableList():
     file = open(table_list_input, "r")
     file_lines = file.read()
     list_of_lines = file_lines.split("\n")
-    return list_of_lines
+    list_of_lines_after_quotes = [w.strip('\"') for w in list_of_lines]
+    return list_of_lines_after_quotes if '"' in list_of_lines[0] else list_of_lines
 
 # Prompt user to enter schema name and/or the prefix_value
 print('\n')
@@ -81,7 +82,7 @@ def general_rules(i):
     return {
                 "rule-type": "selection",
                 "rule-id": uuid.uuid4(),
-                "rule-name": i,
+                "rule-name": uuid.uuid4(),
                 "object-locator": {
                     "schema-name": schema_list_input,
                     "table-name": readTableList()[i] if "add-prefix" not in readTableList()[i] else  readTableList()[i].replace(' add-prefix',"")
@@ -95,7 +96,7 @@ def prefix_rules(i):
     return {
                 "rule-type": "transformation",
                 "rule-id": uuid.uuid4(),
-                "rule-name": i,
+                "rule-name": uuid.uuid4(),
                 "rule-target": "table",
                 "object-locator": {
                     "schema-name": schema_list_input,
