@@ -5,6 +5,9 @@ import json, os, readline
 from bullet import Bullet
 import uuid
 
+# importing the random module
+import random
+
 # Make uuid json serializable
 class UUIDEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -13,6 +16,8 @@ class UUIDEncoder(json.JSONEncoder):
             return obj.hex
         return json.JSONEncoder.default(self, obj)
 
+unique_id = uuid.uuid4() 
+random_ids = []
 # Initialize empty dictionary `data` and set `rules` key to an empty list
 data = {}
 data['rules'] = []
@@ -78,49 +83,52 @@ def tableType():
 table_type=tableType()
 
 # General rules object
-def general_rules(i): 
+def general_rules(i,random_id): 
     return {
-                "rule-type": "selection",
-                "rule-id": uuid.uuid4().int,
-                "rule-name": uuid.uuid4(),
-                "object-locator": {
-                    "schema-name": schema_list_input,
-                    "table-name": readTableList()[i] if "add-prefix" not in readTableList()[i] else  readTableList()[i].replace(' add-prefix',"")
+                "rule-type":"selection",
+                "rule-id":f"{random_id}",
+                "rule-name":unique_id,
+                "object-locator":{
+                    "schema-name":schema_list_input,
+                    "table-name":readTableList()[i] if "add-prefix" not in readTableList()[i] else  readTableList()[i].replace(' add-prefix',"")
                 },
-                "rule-action": rule_action,
-                "filters": []
-                }
+                "rule-action":rule_action,
+                "filters":[]
+            }
 
 # Prefix rules object
-def prefix_rules(i):
+def prefix_rules(i,random_id):
     return {
-                "rule-type": "transformation",
-                "rule-id": uuid.uuid4().int,
-                "rule-name": uuid.uuid4(),
-                "rule-target": "table",
-                "object-locator": {
-                    "schema-name": schema_list_input,
-                    "table-name": readTableList()[i] if "add-prefix" not in readTableList()[i] else  readTableList()[i].replace(' add-prefix',"")
+                "rule-type":"transformation",
+                "rule-id":f"{random_id}",
+                "rule-name":unique_id,
+                "rule-target":"table",
+                "object-locator":{
+                    "schema-name":schema_list_input,
+                    "table-name":readTableList()[i] if "add-prefix" not in readTableList()[i] else  readTableList()[i].replace(' add-prefix',"")
                 },
-                "rule-action": "add-prefix",
-                "value": prefix_value
-                }
+                "rule-action":"add-prefix",
+                "value":prefix_value
+            }
                 
 # Loop through the list of table names, create dictionary, and add it to the list
 def createJSON():
         for i in range(0,len(readTableList())):
+            random_id = random.randint(0,1000)
+            if random_id in random_ids: random_id = random.randint(0,1000)
             if "add-prefix" in readTableList()[i]:
                 if prefix_value==None:
                     print('You forgot to add a value for prefix rule-actions\n Either delete the "add-prefix" from list of tables or run the script again and add value')
                     return
-                data['rules'].append(prefix_rules(i))
-                data['rules'].append(general_rules(i))
+                data['rules'].append(prefix_rules(i,random_id))
+                data['rules'].append(general_rules(i,random_id))
                 print('This table has a prefix value', '\033[1m' + readTableList()[i])
             else:
-                data['rules'].append(general_rules(i))
+                data['rules'].append(general_rules(i,random_id))
+            random_ids.append(random_id)
 
         with open('table_mapping.json', 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=4, cls=UUIDEncoder)
+            json.dump(data, f, ensure_ascii=True, indent=2, cls=UUIDEncoder)
         print('\n')
         print("Check your table_mapping.json file.")
 
