@@ -81,7 +81,7 @@ table_type=tableType()
 def general_rules(i): 
     return {
                 "rule-type": "selection",
-                "rule-id": uuid.uuid4(),
+                "rule-id": uuid.uuid4().int,
                 "rule-name": uuid.uuid4(),
                 "object-locator": {
                     "schema-name": schema_list_input,
@@ -95,7 +95,7 @@ def general_rules(i):
 def prefix_rules(i):
     return {
                 "rule-type": "transformation",
-                "rule-id": uuid.uuid4(),
+                "rule-id": uuid.uuid4().int,
                 "rule-name": uuid.uuid4(),
                 "rule-target": "table",
                 "object-locator": {

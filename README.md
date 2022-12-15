@@ -37,8 +37,8 @@ example of `table_mapping.json` file
     "rules": [
         {
             "rule-type": "transformation",
-            "rule-id": "c1ae16d9b51f4b29918ac28e1467fa93",
-            "rule-name": "a026aca5c01342ebb208d3af9eb30ff1",
+            "rule-id": 133217270651029775251720185826470797345,
+            "rule-name": "95a55e6aefcc4b6cb3cb9fe9167b8bc8",
             "rule-target": "table",
             "object-locator": {
                 "schema-name": "public",
@@ -49,8 +49,8 @@ example of `table_mapping.json` file
         },
         {
             "rule-type": "selection",
-            "rule-id": "4cc783281f2d4f2e847c6f0534c8fa84",
-            "rule-name": "e00561fd581d4304ba091a40321b4895",
+            "rule-id": 146070652287577011669169078964960673232,
+            "rule-name": "ef94fd111c664410a00b9848c1cb9b44",
             "object-locator": {
                 "schema-name": "public",
                 "table-name": "BetaUser"
