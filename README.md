@@ -30,6 +30,39 @@ Now that you `.txt. file is ready, all you have to do is run the following comma
 
 `make run`
 
+example of `table_mapping.json` file
+
+```
+{
+    "rules": [
+        {
+            "rule-type": "transformation",
+            "rule-id": "c1ae16d9b51f4b29918ac28e1467fa93",
+            "rule-name": "a026aca5c01342ebb208d3af9eb30ff1",
+            "rule-target": "table",
+            "object-locator": {
+                "schema-name": "public",
+                "table-name": "BetaUser"
+            },
+            "rule-action": "add-prefix",
+            "value": "example_"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "4cc783281f2d4f2e847c6f0534c8fa84",
+            "rule-name": "e00561fd581d4304ba091a40321b4895",
+            "object-locator": {
+                "schema-name": "public",
+                "table-name": "BetaUser"
+            },
+            "rule-action": "include",
+            "filters": []
+        }
+    ]
+}
+```
+
+
 ## Requirements
 
 `bullet==2.2.0`
