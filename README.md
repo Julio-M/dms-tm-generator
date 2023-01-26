@@ -67,6 +67,35 @@ example of `table_mapping.json` file
 
 `bullet==2.2.0`
 
+## Helpful SQL commands to get table names and count rows
+
+- Get table names:
+```
+WITH tbl AS
+  (SELECT table_schema,
+          TABLE_NAME
+   FROM information_schema.tables
+   WHERE TABLE_NAME not like 'pg_%'
+     AND table_schema in ('public'))
+SELECT table_schema,
+       TABLE_NAME,
+       (xpath('/row/c/text()', query_to_xml(format('select count(*) as c from %I.%I', table_schema, TABLE_NAME), FALSE, TRUE, '')))[1]::text::int AS rows_n
+FROM tbl
+ORDER BY rows_n DESC;
+```
+- Count rows from all tables:
+```
+WITH tbl AS
+  (SELECT table_schema,
+          TABLE_NAME
+   FROM information_schema.tables
+   WHERE TABLE_NAME not like 'pg_%'
+     AND table_schema in ('public'))
+SELECT table_schema,
+       SUM((xpath('/row/c/text()', query_to_xml(format('select count(*) as c from %I.%I', table_schema, TABLE_NAME), FALSE, TRUE, '')))[1]::text::int) AS rows_n
+FROM tbl
+GROUP BY table_schema;
+```
 ## Credits
 
 This script is based on and borrows code from this repo: `emreoztoprak/dms-table-mapping-generator`
